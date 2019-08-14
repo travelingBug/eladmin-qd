@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-button size="mini" type="success" @click="to">编辑</el-button>
-    <eForm ref="form" :sup_this="sup_this" :is-add="false" :dict-id="dictId"/>
+    <eForm ref="form" :sup_this="sup_this" :is-add="false"/>
   </div>
 </template>
 <script>
@@ -16,10 +16,6 @@ export default {
     sup_this: {
       type: Object,
       required: true
-    },
-    dictId: {
-      type: Number,
-      required: true
     }
   },
   methods: {
@@ -27,9 +23,12 @@ export default {
       const _this = this.$refs.form
       _this.form = {
         id: this.data.id,
-        label: this.data.label,
-        value: this.data.value,
-        sort: this.data.sort
+        title: this.data.title,
+        userId: this.data.userId,
+        validEndTime: this.data.validEndTime,
+        nextExuserId: this.data.nextExuserId,
+        currentState: this.data.currentState,
+        linkAddress: this.data.linkAddress
       }
       _this.dialog = true
     }
