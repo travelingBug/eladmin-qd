@@ -51,6 +51,11 @@ export default {
         nextExuserId: '',
         currentState: '',
         linkAddress: ''
+      },
+      rules: {
+        title: [
+          { required: true, message: '请输入名称', trigger: 'blur' }
+        ]
       }
     }
   },

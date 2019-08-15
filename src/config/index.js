@@ -47,4 +47,7 @@ export default {
    * 是否显示设置的悬浮按钮
    */
   settingBtn: true
+  /**
+   * 文件上传地址
+   */
 }

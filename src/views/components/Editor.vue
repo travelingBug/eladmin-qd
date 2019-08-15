@@ -1,12 +1,6 @@
 <template>
   <div>
-    <div ref="editor" style="text-align:left;margin: 5px">
-      <h3 style="text-align: center;">欢迎使用 wangEditor 富文本编辑器!</h3>
-      <ul>
-        <li>富文本中图片上传使用的是sm.ms图床，支持上传到七牛云：<a style="color: #42b983" target="_blank" href="https://sm.ms/">sm.ms</a></li>
-        <li>更多帮助请查看官方文档：<a style="color: #42b983" target="_blank" href="https://www.kancloud.cn/wangfupeng/wangeditor3/332599">wangEditor</a></li>
-      </ul>
-    </div>
+    <div ref="editor" style="text-align:left;margin: 5px"/>
     <div style="margin: 12px 5px;font-size: 16px;font-weight: bold;color: #696969">HTML渲染如下：</div>
     <div class="editor-content" v-html="editorContent"/>
   </div>
@@ -17,17 +11,17 @@ import { mapGetters } from 'vuex'
 import E from 'wangeditor'
 import { getToken } from '@/utils/auth'
 export default {
+  props: { content: {
+    type: String,
+    default: '',
+    required: true
+  }},
   data() {
     return {
       headers: {
         'Authorization': 'Bearer ' + getToken()
       },
-      editorContent:
-        `<h3 style="text-align: center;">欢迎使用 wangEditor 富文本编辑器!</h3>
-        <ul>
-          <li>富文本中图片上传使用的是sm.ms图床，支持上传到七牛云：<a style="color: #42b983" target="_blank" href="https://sm.ms/">sm.ms</a></li>
-          <li>更多帮助请查看官方文档：<a style="color: #42b983" target="_blank" href="https://www.kancloud.cn/wangfupeng/wangeditor3/332599">wangEditor</a></li>
-        </ul>`
+      editorContent: ''
     }
   },
   computed: {
@@ -45,8 +39,10 @@ export default {
     editor.customConfig.uploadImgServer = this.imagesUploadApi // 上传图片到服务器
     editor.customConfig.onchange = (html) => {
       this.editorContent = html
+      this.$emit('msg', html)
     }
     editor.create()
+    editor.txt.html(this.content) // 回显
   }
 }
 </script>

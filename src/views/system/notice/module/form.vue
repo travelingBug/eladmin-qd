@@ -1,17 +1,12 @@
 <template>
-  <el-dialog :append-to-body="true" :visible.sync="dialog" :title="isAdd ? '新增' : '编辑'" width="500px">
+  <el-dialog :append-to-body="true" :visible.sync="dialog" :title="isAdd ? '新增' : '编辑'" width="820px">
     <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
       <el-form-item label="标题">
         <el-input v-model="form.title" style="width: 370px;"/>
       </el-form-item>
       <el-form-item label="内容">
-        <el-input v-model="form.content" style="width: 370px;"/>
-      </el-form-item>
-      <el-form-item label="状态">
-        <el-input v-model="form.status" style="width: 370px;"/>
-      </el-form-item>
-      <el-form-item label="创建日期">
-        <el-input v-model="form.createTime" style="width: 370px;"/>
+        <!-- <el-input v-model="form.content" style="width: 370px;"/> -->
+        <wang-editor :content="form.content" @msg="getContent" />
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -23,7 +18,9 @@
 
 <script>
 import { add, edit } from '@/api/notice'
+import wangEditor from '@/views/components/Editor'
 export default {
+  components: { wangEditor },
   props: {
     isAdd: {
       type: Boolean,
@@ -43,6 +40,11 @@ export default {
         content: '',
         status: '',
         createTime: ''
+      },
+      rules: {
+        title: [
+          { required: true, message: '请输入名称', trigger: 'blur' }
+        ]
       }
     }
   },
@@ -96,6 +98,11 @@ export default {
         status: '',
         createTime: ''
       }
+    },
+    // 监听回调函数
+    getContent(data) {
+      console.log(data)
+      this.form.content = data
     }
   }
 }
